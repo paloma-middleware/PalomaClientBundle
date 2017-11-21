@@ -1,0 +1,6 @@
+framework:
+    secret: TestSecret
+
+paloma_client:
+    base_url: 'https://palomatest/api'
+    api_key: TestApiKey

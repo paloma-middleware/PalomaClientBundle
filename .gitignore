@@ -1,0 +1,13 @@
+# General
+.DS_Store
+
+# JetBrains
+/.idea
+
+# Composer
+/vendor
+/composer.lock
+
+# Symfony
+/Tests/app/cache
+/Tests/app/logs

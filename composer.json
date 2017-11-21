@@ -1,0 +1,16 @@
+{
+  "name": "paloma/client-bundle",
+  "license": "MIT",
+  "type": "symfony-bundle",
+  "autoload": {
+    "psr-4": {"Paloma\\ClientBundle\\": ""}
+  },
+  "require": {
+    "php": ">=5.5",
+    "paloma/shop-client": "dev-master"
+  },
+  "require-dev": {
+    "symfony/symfony": ">=2.8",
+    "phpunit/phpunit": ">=4.0"
+  }
+}

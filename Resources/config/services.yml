@@ -1,0 +1,24 @@
+services:
+
+    paloma_client.paloma_profiler:
+        class: Paloma\Shop\PalomaProfiler
+        public: false
+
+    paloma_client.paloma_data_collector:
+        class: Paloma\Shop\PalomaDataCollector
+        arguments:
+            - '@paloma_client.paloma_profiler'
+        public: false
+        tags:
+            - { name: data_collector, template: '@Paloma/templates/profiler.twig', id: paloma }
+
+    paloma_client.client_factory:
+        class: Paloma\ClientBundle\Factory\ClientFactory
+        arguments:
+            - 'base_url injected'
+            - 'api_key injected'
+            - '@paloma_client.paloma_profiler'
+
+    paloma_client.default_client:
+        class: Paloma\Shop\Paloma
+        factory: 'paloma_client.client_factory:getDefaultClient'
