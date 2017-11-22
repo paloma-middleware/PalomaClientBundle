@@ -1,5 +1,14 @@
 services:
 
+    paloma_client.twig_profiler_extension:
+        class: Paloma\ClientBundle\Twig\ProfilerExtension
+        arguments:
+            - '@Twig.loader'
+            - '%kernel.root_dir%'
+        public: false
+        tags:
+            - { name: twig.extension }
+
     paloma_client.paloma_profiler:
         class: Paloma\Shop\PalomaProfiler
         public: false
@@ -10,7 +19,7 @@ services:
             - '@paloma_client.paloma_profiler'
         public: false
         tags:
-            - { name: data_collector, template: '@Paloma/templates/profiler.twig', id: paloma }
+            - { name: data_collector, template: '@paloma_shop_client/profiler.html.twig', id: paloma }
 
     paloma_client.client_factory:
         class: Paloma\ClientBundle\Factory\ClientFactory
