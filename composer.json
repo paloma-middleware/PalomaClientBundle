@@ -7,7 +7,7 @@
   },
   "require": {
     "php": ">=5.5",
-    "paloma/shop-client": ">=2.0.3"
+    "paloma/shop-client": ">=2.1.0"
   },
   "require-dev": {
     "symfony/symfony": ">=2.8",
