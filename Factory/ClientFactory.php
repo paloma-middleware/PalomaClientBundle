@@ -43,6 +43,11 @@ class ClientFactory
         return $this->getOrCreateClient($this->defaultChannel, $this->defaultLocale);
     }
 
+    /**
+     * @param $channel string The Paloma channel to use
+     * @param $locale string The Paloma locale to use
+     * @return Paloma
+     */
     public function getClient($channel, $locale)
     {
         return $this->getOrCreateClient($channel, $locale);
