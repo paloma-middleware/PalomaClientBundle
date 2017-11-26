@@ -36,6 +36,7 @@ class ClientFactoryTest extends TestCase
         /** @var ClientFactory $factory */
         $factory = $this->container->get('paloma_client.client_factory');
         $factory->setDefaultChannel('default');
+        $factory->setDefaultLocale('default');
 
         $client = $factory->getDefaultClient();
         $this->assertInstanceOf('Paloma\Shop\Paloma', $client);
