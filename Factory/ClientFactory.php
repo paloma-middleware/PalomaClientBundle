@@ -63,8 +63,8 @@ class ClientFactory
         if (isset($this->clientCache[$key])) {
             return $this->clientCache[$key];
         }
-        $this->clientCache[$key] = Paloma::create($this->baseUrl, $channel,
-            $locale, $this->apiKey, null, null, $this->palomaProfile);
+        $this->clientCache[$key] = Paloma::create($this->baseUrl, $this->apiKey,
+            $channel, $locale, null, null, $this->palomaProfile);
         return $this->clientCache[$key];
     }
 

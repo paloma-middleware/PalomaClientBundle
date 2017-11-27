@@ -39,11 +39,11 @@ class ClientFactoryTest extends TestCase
         $factory->setDefaultLocale('default');
 
         $client = $factory->getDefaultClient();
-        $this->assertInstanceOf('Paloma\Shop\Paloma', $client);
+        $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
 
         /** @var Paloma $client */
         $client = $this->container->get('paloma_client.default_client');
-        $this->assertInstanceOf('Paloma\Shop\Paloma', $client);
+        $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
     }
 
     public  function testGetDefaultFail()
