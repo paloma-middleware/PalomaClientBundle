@@ -6,6 +6,7 @@ namespace Paloma\ClientBundle\Factory;
 
 use Paloma\Shop\Paloma;
 use Paloma\Shop\PalomaProfiler;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 
 class ClientFactory
@@ -20,6 +21,8 @@ class ClientFactory
     private $successLogFormat;
     /** @var  string */
     private $errorLogFormat;
+    /** @var  CacheItemPoolInterface */
+    private $shopClientCache;
     /** @var  PalomaProfiler */
     private $palomaProfiler;
     /** @var  string */
@@ -30,7 +33,8 @@ class ClientFactory
     private $clientCache = [];
 
     public function __construct($baseUrl, $apiKey, LoggerInterface $shopClientLogger = null,
-        $successLogFormat = null, $errorLogFormat = null, PalomaProfiler $palomaProfile = null)
+        $successLogFormat = null, $errorLogFormat = null, PalomaProfiler $palomaProfile = null,
+        CacheItemPoolInterface $shopClientCache = null)
     {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
@@ -38,6 +42,7 @@ class ClientFactory
         $this->successLogFormat = $successLogFormat;
         $this->errorLogFormat = $errorLogFormat;
         $this->palomaProfiler = $palomaProfile;
+        $this->shopClientCache = $shopClientCache;
     }
 
     /**
@@ -66,6 +71,7 @@ class ClientFactory
 
     /**
      * @param $channel string
+     * @param $locale string
      * @return Paloma
      */
     private function getOrCreateClient($channel, $locale)
@@ -76,7 +82,7 @@ class ClientFactory
         }
         $this->clientCache[$key] = Paloma::create($this->baseUrl, $this->apiKey,
             $channel, $locale, null, $this->shopClientLogger, $this->successLogFormat,
-            $this->errorLogFormat, $this->palomaProfiler);
+            $this->errorLogFormat, $this->palomaProfiler, $this->shopClientCache);
         return $this->clientCache[$key];
     }
 
@@ -162,6 +168,14 @@ class ClientFactory
     public function getPalomaProfiler()
     {
         return $this->palomaProfiler;
+    }
+
+    /**
+     * @return CacheItemPoolInterface
+     */
+    public function getShopClientCache()
+    {
+        return $this->shopClientCache;
     }
 
 }

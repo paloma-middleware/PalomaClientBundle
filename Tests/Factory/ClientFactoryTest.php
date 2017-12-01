@@ -4,6 +4,7 @@
 namespace Paloma\ClientBundle\Tests\Factory;
 
 
+use Cache\Adapter\Void\VoidCachePool;
 use Paloma\ClientBundle\Factory\ClientFactory;
 use Paloma\Shop\Paloma;
 use PHPUnit\Framework\TestCase;
@@ -31,6 +32,7 @@ class ClientFactoryTest extends TestCase
         $this->assertInstanceOf(LoggerInterface::class, $factory->getShopClientLogger());
         $this->assertEquals('successlog', $factory->getSuccessLogFormat());
         $this->assertEquals('errorlog', $factory->getErrorLogFormat());
+        $this->assertInstanceOf(VoidCachePool::class, $factory->getShopClientCache());
     }
 
     public function testConfigNullLogger()
@@ -44,6 +46,7 @@ class ClientFactoryTest extends TestCase
         $this->assertNull($factory->getShopClientLogger());
         $this->assertNull($factory->getSuccessLogFormat());
         $this->assertNull($factory->getErrorLogFormat());
+        $this->assertNull($factory->getShopClientCache());
     }
 
     public function testGetDefaultClient()

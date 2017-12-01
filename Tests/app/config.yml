@@ -1,9 +1,15 @@
 framework:
     secret: TestSecret
 
+cache_adapter:
+    providers:
+        test_void:
+            factory: cache.factory.void
+
 paloma_client:
     base_url: 'https://palomatest/api'
     api_key: TestApiKey
     shop_client_logger: monolog.logger
     success_log_format: successlog
-    error_log_format:  errorlog
+    error_log_format: errorlog
+    cache_provider: cache.provider.test_void

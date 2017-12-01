@@ -7,3 +7,4 @@ paloma_client:
     shop_client_logger: ~
     success_log_format: ~
     error_log_format:  ~
+    cache_provider: ~

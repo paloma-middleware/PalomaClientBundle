@@ -21,6 +21,7 @@ class AppKernel extends Kernel
         return array(
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\MonologBundle\MonologBundle(),
+            new \Cache\AdapterBundle\CacheAdapterBundle(),
             new \Paloma\ClientBundle\PalomaClientBundle(),
         );
     }

@@ -30,6 +30,7 @@ services:
             - 'success_log_format injected'
             - 'error_log_format injected'
             - '@paloma_client.paloma_profiler'
+            - 'cache_provider injected'
 
     paloma_client.default_client:
         class: Paloma\Shop\Paloma

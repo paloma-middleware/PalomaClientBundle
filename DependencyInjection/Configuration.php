@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('shop_client_logger')->defaultValue('monolog.logger')->end()
             ->scalarNode('success_log_format')->defaultNull()->end()
             ->scalarNode('error_log_format')->defaultNull()->end()
+            ->scalarNode('cache_provider')->defaultNull()->end()
             ->end()
         ;
 
