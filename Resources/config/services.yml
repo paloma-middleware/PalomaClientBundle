@@ -26,6 +26,7 @@ services:
         arguments:
             - 'base_url injected'
             - 'api_key injected'
+            - '@session'
             - 'shop_client_logger injected'
             - 'success_log_format injected'
             - 'error_log_format injected'

@@ -1,5 +1,7 @@
 framework:
     secret: TestSecret
+    session:
+        storage_id: session.storage.mock_file
 
 cache_adapter:
     providers:

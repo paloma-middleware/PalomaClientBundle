@@ -8,6 +8,7 @@ use Paloma\Shop\Paloma;
 use Paloma\Shop\PalomaProfiler;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ClientFactory
 {
@@ -15,6 +16,8 @@ class ClientFactory
     private $baseUrl;
     /** @var  string */
     private $apiKey;
+    /** @var  SessionInterface */
+    private $session;
     /** @var  LoggerInterface */
     private $shopClientLogger;
     /** @var  string */
@@ -32,12 +35,14 @@ class ClientFactory
     /** @var Paloma[] */
     private $clientCache = [];
 
-    public function __construct($baseUrl, $apiKey, LoggerInterface $shopClientLogger = null,
-        $successLogFormat = null, $errorLogFormat = null, PalomaProfiler $palomaProfile = null,
+    public function __construct($baseUrl, $apiKey, SessionInterface $session = null,
+        LoggerInterface $shopClientLogger = null, $successLogFormat = null,
+        $errorLogFormat = null, PalomaProfiler $palomaProfile = null,
         CacheItemPoolInterface $shopClientCache = null)
     {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
+        $this->session = $session;
         $this->shopClientLogger = $shopClientLogger;
         $this->successLogFormat = $successLogFormat;
         $this->errorLogFormat = $errorLogFormat;
@@ -81,7 +86,7 @@ class ClientFactory
             return $this->clientCache[$key];
         }
         $this->clientCache[$key] = Paloma::create($this->baseUrl, $this->apiKey,
-            $channel, $locale, null, $this->shopClientLogger, $this->successLogFormat,
+            $channel, $locale, $this->session, $this->shopClientLogger, $this->successLogFormat,
             $this->errorLogFormat, $this->palomaProfiler, $this->shopClientCache);
         return $this->clientCache[$key];
     }
