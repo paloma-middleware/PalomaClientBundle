@@ -28,5 +28,8 @@ class PalomaClientExtension extends Extension
         $def = $container->getDefinition('paloma_client.client_factory');
         $def->replaceArgument(0, $config['base_url']);
         $def->replaceArgument(1, $config['api_key']);
+        $def->replaceArgument(2, $config['shop_client_logger']);
+        $def->replaceArgument(3, $config['success_log_format']);
+        $def->replaceArgument(4, $config['error_log_format']);
     }
 }

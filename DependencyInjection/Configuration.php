@@ -22,8 +22,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('base_url')->isRequired()->end()
-                ->scalarNode('api_key')->isRequired()->end()
+            ->scalarNode('base_url')->isRequired()->end()
+            ->scalarNode('api_key')->isRequired()->end()
+            ->scalarNode('shop_client_logger')->defaultValue('monolog.logger')->end()
+            ->scalarNode('success_log_format')->defaultNull()->end()
+            ->scalarNode('error_log_format')->defaultNull()->end()
             ->end()
         ;
 

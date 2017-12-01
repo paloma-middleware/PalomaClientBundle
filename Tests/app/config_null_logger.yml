@@ -4,6 +4,6 @@ framework:
 paloma_client:
     base_url: 'https://palomatest/api'
     api_key: TestApiKey
-    shop_client_logger: monolog.logger
-    success_log_format: successlog
-    error_log_format:  errorlog
+    shop_client_logger: ~
+    success_log_format: ~
+    error_log_format:  ~

@@ -6,6 +6,7 @@ namespace Paloma\ClientBundle\Factory;
 
 use Paloma\Shop\Paloma;
 use Paloma\Shop\PalomaProfiler;
+use Psr\Log\LoggerInterface;
 
 class ClientFactory
 {
@@ -13,8 +14,14 @@ class ClientFactory
     private $baseUrl;
     /** @var  string */
     private $apiKey;
+    /** @var  LoggerInterface */
+    private $shopClientLogger;
+    /** @var  string */
+    private $successLogFormat;
+    /** @var  string */
+    private $errorLogFormat;
     /** @var  PalomaProfiler */
-    private $palomaProfile;
+    private $palomaProfiler;
     /** @var  string */
     private $defaultChannel;
     /** @var  string */
@@ -22,11 +29,15 @@ class ClientFactory
     /** @var Paloma[] */
     private $clientCache = [];
 
-    public function __construct($baseUrl, $apiKey, PalomaProfiler $palomaProfile = null)
+    public function __construct($baseUrl, $apiKey, LoggerInterface $shopClientLogger = null,
+        $successLogFormat = null, $errorLogFormat = null, PalomaProfiler $palomaProfile = null)
     {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
-        $this->palomaProfile = $palomaProfile;
+        $this->shopClientLogger = $shopClientLogger;
+        $this->successLogFormat = $successLogFormat;
+        $this->errorLogFormat = $errorLogFormat;
+        $this->palomaProfiler = $palomaProfile;
     }
 
     /**
@@ -64,7 +75,8 @@ class ClientFactory
             return $this->clientCache[$key];
         }
         $this->clientCache[$key] = Paloma::create($this->baseUrl, $this->apiKey,
-            $channel, $locale, null, null, $this->palomaProfile);
+            $channel, $locale, null, $this->shopClientLogger, $this->successLogFormat,
+            $this->errorLogFormat, $this->palomaProfiler);
         return $this->clientCache[$key];
     }
 
@@ -118,6 +130,38 @@ class ClientFactory
     {
         $this->defaultLocale = $defaultLocale;
         return $this;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getShopClientLogger()
+    {
+        return $this->shopClientLogger;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuccessLogFormat()
+    {
+        return $this->successLogFormat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getErrorLogFormat()
+    {
+        return $this->errorLogFormat;
+    }
+
+    /**
+     * @return PalomaProfiler
+     */
+    public function getPalomaProfiler()
+    {
+        return $this->palomaProfiler;
     }
 
 }

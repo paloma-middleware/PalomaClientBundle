@@ -7,34 +7,51 @@ namespace Paloma\ClientBundle\Tests\Factory;
 use Paloma\ClientBundle\Factory\ClientFactory;
 use Paloma\Shop\Paloma;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
 class ClientFactoryTest extends TestCase
 {
 
-    /** @var  ContainerInterface */
-    private $container;
-
-    protected function setUp()
+    protected function getContainer($config)
     {
-        $kernel = new \AppKernel('test', true);
+        $kernel = new \AppKernel($config, 'test', true);
         $kernel->boot();
 
-        $this->container = $kernel->getContainer();
+        return $kernel->getContainer();
     }
 
     public function testConfig()
     {
+        $container = $this->getContainer('config.yml');
+
         /** @var ClientFactory $factory */
-        $factory = $this->container->get('paloma_client.client_factory');
+        $factory = $container->get('paloma_client.client_factory');
         $this->assertEquals('https://palomatest/api', $factory->getBaseUrl());
         $this->assertEquals('TestApiKey', $factory->getApiKey());
+        $this->assertInstanceOf(LoggerInterface::class, $factory->getShopClientLogger());
+        $this->assertEquals('successlog', $factory->getSuccessLogFormat());
+        $this->assertEquals('errorlog', $factory->getErrorLogFormat());
+    }
+
+    public function testConfigNullLogger()
+    {
+        $container = $this->getContainer('config_null_logger.yml');
+
+        /** @var ClientFactory $factory */
+        $factory = $container->get('paloma_client.client_factory');
+        $this->assertEquals('https://palomatest/api', $factory->getBaseUrl());
+        $this->assertEquals('TestApiKey', $factory->getApiKey());
+        $this->assertNull($factory->getShopClientLogger());
+        $this->assertNull($factory->getSuccessLogFormat());
+        $this->assertNull($factory->getErrorLogFormat());
     }
 
     public function testGetDefaultClient()
     {
+        $container = $this->getContainer('config.yml');
+
         /** @var ClientFactory $factory */
-        $factory = $this->container->get('paloma_client.client_factory');
+        $factory = $container->get('paloma_client.client_factory');
         $factory->setDefaultChannel('default');
         $factory->setDefaultLocale('default');
 
@@ -42,14 +59,16 @@ class ClientFactoryTest extends TestCase
         $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
 
         /** @var Paloma $client */
-        $client = $this->container->get('paloma_client.default_client');
+        $client = $container->get('paloma_client.default_client');
         $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
     }
 
-    public  function testGetDefaultFail()
+    public function testGetDefaultFail()
     {
+        $container = $this->getContainer('config.yml');
+
         $this->expectException(\LogicException::class);
-        $this->container->get('paloma_client.default_client');
+        $container->get('paloma_client.default_client');
     }
 
 }

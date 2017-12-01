@@ -7,10 +7,11 @@
   },
   "require": {
     "php": ">=5.5",
-    "paloma/shop-client": ">=2.2"
+    "paloma/shop-client": "dev-master"
   },
   "require-dev": {
-    "symfony/symfony": ">=2.8",
-    "phpunit/phpunit": ">=4.0"
+    "phpunit/phpunit": ">=4.0",
+    "symfony/monolog-bundle": ">=3.0.2",
+    "symfony/symfony": ">=2.8"
   }
 }
