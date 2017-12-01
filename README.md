@@ -27,7 +27,7 @@ $myOtherChannelClient = $factory->getClient('my-other-channel', 'my-locale');
 ```
 
 
-## Installation and Configuration
+## Installation
 
 Add the bundle to your application:
 
@@ -45,7 +45,8 @@ $bundles = [
 ];
 ```
 
-The following configuration is mandatory:
+
+## Configuration
 
 ```yaml
 paloma_client:
@@ -116,7 +117,7 @@ area as the default channel and locale is set.
 
 It can be done like this:
 
-```
+```php
 $factory = $container->get('paloma_client.client_factory');
 # This is just an example of how to specify a trace ID, one might use more
 # elaborate approaches which include session and request information.
