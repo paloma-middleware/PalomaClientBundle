@@ -51,6 +51,19 @@ The following configuration is mandatory:
 paloma_client:
     base_url: 'https://my-api-endpoint'  # Probably get this from parameters
     api_key: MyApiKey  # Probably get this from parameters
+    # The logger to use within the Paloma shop client.
+    # Defaults to 'monolog.logger'
+    shop_client_logger: ~
+    # The log format to use for Paloma requests which are deemed successful.
+    # If not set the default specified in paloma/shop-client will be used.
+    success_log_format: ~
+    # The log format to use for Paloma requests which are deemed erroneous.
+    # If not set the default specified in paloma/shop-client will be used.
+    error_log_format:  ~
+    # The cache provider to use as the caching backend. Has to be a provider
+    # which implements the PSR-6 CacheItemPoolInterface. Ideally one uses
+    # the php-cache/adapter-bundle to define and configure a provider service. 
+    cache_provider: ~
 ```
 
 
@@ -85,3 +98,27 @@ $factory->setDefaultLocale('<my determined locale>');
 After this no other code in the application needs to care about channels or
 locales. This should handle most common use cases as the need to address 
 multiple channels or locales within the same request is rare.
+
+
+## Paloma trace ID
+
+Paloma allows for the specification of a trace ID alongside every request. This
+helps to correlate requests observed on Paloma and the client application with
+each other.
+
+The Paloma trace ID has to be a string which is exactly 8 characters long and
+consists of only lower case characters a-z and digits 0-9.
+
+It is possible to set this trace ID within the `ClientFactory` such that it will
+be added to every request to Paloma which is sent through a client created by
+that factory. A convenient location to set the trace ID is probably in the same
+area as the default channel and locale is set.
+
+It can be done like this:
+
+```
+$factory = $container->get('paloma_client.client_factory');
+# This is just an example of how to specify a trace ID, one might use more
+# elaborate approaches which include session and request information.
+$factory->setPalomaTraceId(substr(uniqid(), 0, 8));
+```
