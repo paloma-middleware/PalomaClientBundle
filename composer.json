@@ -7,7 +7,7 @@
   },
   "require": {
     "php": ">=5.5",
-    "paloma/shop-client": "dev-master"
+    "paloma/shop-client": ">=2.3"
   },
   "require-dev": {
     "cache/adapter-bundle": ">=1.0",
