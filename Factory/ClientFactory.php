@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class ClientFactory
 {
+
     /** @var  string */
     private $baseUrl;
     /** @var  string */
@@ -34,6 +35,8 @@ class ClientFactory
     private $defaultLocale;
     /** @var Paloma[] */
     private $clientCache = [];
+    /** @var string */
+    private $palomaTraceId = null;
 
     public function __construct($baseUrl, $apiKey, SessionInterface $session = null,
         LoggerInterface $shopClientLogger = null, $successLogFormat = null,
@@ -87,7 +90,7 @@ class ClientFactory
         }
         $this->clientCache[$key] = Paloma::create($this->baseUrl, $this->apiKey,
             $channel, $locale, $this->session, $this->shopClientLogger, $this->successLogFormat,
-            $this->errorLogFormat, $this->palomaProfiler, $this->shopClientCache);
+            $this->errorLogFormat, $this->palomaProfiler, $this->shopClientCache, $this->palomaTraceId);
         return $this->clientCache[$key];
     }
 
@@ -181,6 +184,24 @@ class ClientFactory
     public function getShopClientCache()
     {
         return $this->shopClientCache;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPalomaTraceId()
+    {
+        return $this->palomaTraceId;
+    }
+
+    /**
+     * @param string $palomaTraceId
+     * @return ClientFactory
+     */
+    public function setPalomaTraceId($palomaTraceId)
+    {
+        $this->palomaTraceId = $palomaTraceId;
+        return $this;
     }
 
 }
