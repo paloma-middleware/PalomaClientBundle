@@ -15,8 +15,6 @@ class PalomaClientCompilerPass implements CompilerPassInterface
     {
         // Replace some string arguments with their service equivalents
         $clientFactoryDef = $container->getDefinition('paloma_client.client_factory');
-        // Logger
-        $this->replaceReferenceArgument($container, $clientFactoryDef, 3);
         // Cache provider
         $this->replaceReferenceArgument($container, $clientFactoryDef, 7);
     }

@@ -27,7 +27,7 @@ services:
             - 'base_url injected'
             - 'api_key injected'
             - '@session'
-            - 'shop_client_logger injected'
+            - '@logger'
             - 'success_log_format injected'
             - 'error_log_format injected'
             - '@paloma_client.paloma_profiler'

@@ -43,7 +43,7 @@ class ClientFactoryTest extends TestCase
         $factory = $container->get('paloma_client.client_factory');
         $this->assertEquals('https://palomatest/api', $factory->getBaseUrl());
         $this->assertEquals('TestApiKey', $factory->getApiKey());
-        $this->assertNull($factory->getShopClientLogger());
+        $this->assertInstanceOf(LoggerInterface::class, $factory->getShopClientLogger());
         $this->assertNull($factory->getSuccessLogFormat());
         $this->assertNull($factory->getErrorLogFormat());
         $this->assertNull($factory->getShopClientCache());
