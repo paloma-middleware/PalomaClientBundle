@@ -31,7 +31,7 @@ class ClientFactoryTest extends TestCase
         $this->assertEquals('TestApiKey', $factory->getApiKey());
         $this->assertInstanceOf(LoggerInterface::class, $factory->getShopClientLogger());
         $this->assertEquals('successlog', $factory->getSuccessLogFormat());
-        $this->assertEquals('errorlog', $factory->getErrorLogFormat());
+        $this->assertEquals('faillog', $factory->getErrorLogFormat());
         $this->assertInstanceOf(VoidCachePool::class, $factory->getShopClientCache());
     }
 

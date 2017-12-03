@@ -7,6 +7,6 @@ paloma_client:
     base_url: 'https://palomatest/api'
     api_key: TestApiKey
     shop_client_logger: ~
-    success_log_format: ~
-    error_log_format:  ~
+    log_format_success: ~
+    log_format_failure:  ~
     cache_provider: ~
