@@ -52,9 +52,6 @@ $bundles = [
 paloma_client:
     base_url: 'https://my-api-endpoint'  # Probably get this from parameters
     api_key: MyApiKey  # Probably get this from parameters
-    # The logger to use within the Paloma shop client.
-    # Defaults to 'monolog.logger'
-    shop_client_logger: ~
     # The log format to use for Paloma requests which are deemed successful.
     # If not set the default specified in paloma/shop-client will be used.
     log_format_success: ~
