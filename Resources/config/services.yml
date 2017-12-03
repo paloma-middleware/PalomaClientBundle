@@ -34,5 +34,5 @@ services:
             - 'cache_provider injected'
 
     paloma_client.default_client:
-        class: Paloma\Shop\Paloma
+        class: Paloma\Shop\PalomaClient
         factory: 'paloma_client.client_factory:getDefaultClient'

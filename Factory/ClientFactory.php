@@ -5,6 +5,7 @@ namespace Paloma\ClientBundle\Factory;
 
 
 use Paloma\Shop\Paloma;
+use Paloma\Shop\PalomaClient;
 use Paloma\Shop\PalomaProfiler;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
@@ -33,7 +34,7 @@ class ClientFactory
     private $defaultChannel;
     /** @var  string */
     private $defaultLocale;
-    /** @var Paloma[] */
+    /** @var PalomaClient[] */
     private $clientCache = [];
     /** @var string */
     private $palomaTraceId = null;
@@ -54,7 +55,7 @@ class ClientFactory
     }
 
     /**
-     * @return Paloma
+     * @return PalomaClient
      */
     public function getDefaultClient()
     {
@@ -70,7 +71,7 @@ class ClientFactory
     /**
      * @param $channel string The Paloma channel to use
      * @param $locale string The Paloma locale to use
-     * @return Paloma
+     * @return PalomaClient
      */
     public function getClient($channel, $locale)
     {
@@ -80,7 +81,7 @@ class ClientFactory
     /**
      * @param $channel string
      * @param $locale string
-     * @return Paloma
+     * @return PalomaClient
      */
     private function getOrCreateClient($channel, $locale)
     {
