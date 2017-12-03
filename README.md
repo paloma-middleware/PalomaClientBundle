@@ -57,10 +57,10 @@ paloma_client:
     shop_client_logger: ~
     # The log format to use for Paloma requests which are deemed successful.
     # If not set the default specified in paloma/shop-client will be used.
-    success_log_format: ~
-    # The log format to use for Paloma requests which are deemed erroneous.
+    log_format_success: ~
+    # The log format to use for Paloma requests which are deemed failed.
     # If not set the default specified in paloma/shop-client will be used.
-    error_log_format:  ~
+    log_format_failure:  ~
     # The cache provider to use as the caching backend. Has to be a provider
     # which implements the PSR-6 CacheItemPoolInterface. Ideally one uses
     # the php-cache/adapter-bundle to define and configure a provider service. 
