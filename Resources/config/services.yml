@@ -23,6 +23,7 @@ services:
 
     paloma_client.client_factory:
         class: Paloma\ClientBundle\Factory\ClientFactory
+        public: true
         arguments:
             - 'base_url injected'
             - 'api_key injected'
@@ -33,6 +34,15 @@ services:
             - '@paloma_client.paloma_profiler'
             - 'cache_provider injected'
 
+    Paloma\ClientBundle\Factory\ClientFactory:
+        alias: paloma_client.client_factory
+        public: true
+
     paloma_client.default_client:
         class: Paloma\Shop\PalomaClient
+        public: true
         factory: 'paloma_client.client_factory:getDefaultClient'
+
+    Paloma\Shop\PalomaClient:
+        alias: paloma_client.default_client
+        public: true
