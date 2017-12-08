@@ -1,4 +1,5 @@
 <?php
 
 $loader = require __DIR__.'/../../vendor/autoload.php';
-require __DIR__.'/AppKernel.php';
+require_once __DIR__.'/TestBundle.php';
+require_once __DIR__.'/AppKernel.php';

@@ -19,10 +19,12 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         return array(
-            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new \Symfony\Bundle\MonologBundle\MonologBundle(),
-            new \Cache\AdapterBundle\CacheAdapterBundle(),
-            new \Paloma\ClientBundle\PalomaClientBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Cache\AdapterBundle\CacheAdapterBundle(),
+            new Paloma\ClientBundle\PalomaClientBundle(),
+            new TestBundle(),
         );
     }
 

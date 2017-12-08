@@ -46,3 +46,26 @@ services:
     Paloma\Shop\PalomaClient:
         alias: paloma_client.default_client
         public: true
+
+    paloma_client.paloma_user_provider:
+        class: Paloma\ClientBundle\Security\PalomaUserProvider
+        arguments:
+            - '@security.token_storage'
+        public: false
+
+    paloma_client.paloma_user_auth_provider:
+        class: Paloma\ClientBundle\Security\PalomaUserAuthProvider
+        arguments:
+            - '@paloma_client.default_client'
+            - '@logger'
+        public: false
+
+    paloma_client.paloma_user_auth_listener:
+        class: Paloma\ClientBundle\Security\PalomaUserAuthListener
+        arguments:
+            - 'formFieldNameUsername injected'
+            - 'formFieldNamePassword injected'
+            - '@security.token_storage'
+            - '@security.authentication.manager'
+            - '@logger'
+        public: false

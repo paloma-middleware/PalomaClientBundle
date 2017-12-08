@@ -22,11 +22,18 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('base_url')->isRequired()->end()
-            ->scalarNode('api_key')->isRequired()->end()
-            ->scalarNode('log_format_success')->defaultNull()->end()
-            ->scalarNode('log_format_failure')->defaultNull()->end()
-            ->scalarNode('cache_provider')->defaultNull()->end()
+                ->scalarNode('base_url')->isRequired()->end()
+                ->scalarNode('api_key')->isRequired()->end()
+                ->scalarNode('log_format_success')->defaultNull()->end()
+                ->scalarNode('log_format_failure')->defaultNull()->end()
+                ->scalarNode('cache_provider')->defaultNull()->end()
+                ->arrayNode('security')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('username_parameter')->defaultValue('_paloma_client_user_username')->end()
+                        ->scalarNode('password_parameter')->defaultValue('_paloma_client_user_password')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 
