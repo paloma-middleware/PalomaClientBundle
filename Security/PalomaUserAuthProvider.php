@@ -4,14 +4,14 @@
 namespace Paloma\ClientBundle\Security;
 
 
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\BadResponseException;
 use Paloma\ClientBundle\Model\Customer;
 use Paloma\ClientBundle\Model\User;
 use Paloma\Shop\PalomaClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
 class PalomaUserAuthProvider implements AuthenticationProviderInterface
 {
@@ -36,10 +36,14 @@ class PalomaUserAuthProvider implements AuthenticationProviderInterface
         try {
             $response = $this->palomaClient->customers()->authenticateUser($token->getUsername(),
                 $token->getPassword());
-        } catch (ClientException $e) {
-            if ($e->getResponse()->getStatusCode() == 403) {
-                throw new AuthenticationException('PalomaUserAuthProvider: authentication failed for user: ' .
-                    $token->getUsername());
+        } catch (BadResponseException $e) {
+            $statusCode = $e->getResponse()->getStatusCode();
+            if ($statusCode == 403 || $statusCode == 404) {
+                throw new CustomUserMessageAuthenticationException('Invalid credentials.');
+            }
+            if ($statusCode >= 500) {
+                throw new CustomUserMessageAuthenticationException(
+                    'Authentication request could not be processed due to a system problem.');
             }
             throw $e;
         }
