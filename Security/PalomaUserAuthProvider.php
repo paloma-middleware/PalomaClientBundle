@@ -11,7 +11,8 @@ use Paloma\Shop\PalomaClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class PalomaUserAuthProvider implements AuthenticationProviderInterface
 {
@@ -39,11 +40,10 @@ class PalomaUserAuthProvider implements AuthenticationProviderInterface
         } catch (BadResponseException $e) {
             $statusCode = $e->getResponse()->getStatusCode();
             if ($statusCode == 403 || $statusCode == 404) {
-                throw new CustomUserMessageAuthenticationException('Invalid credentials.');
+                throw new BadCredentialsException();
             }
             if ($statusCode >= 500) {
-                throw new CustomUserMessageAuthenticationException(
-                    'Authentication request could not be processed due to a system problem.');
+                throw new AuthenticationServiceException();
             }
             throw $e;
         }
