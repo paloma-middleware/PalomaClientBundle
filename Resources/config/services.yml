@@ -69,3 +69,7 @@ services:
             - '@security.authentication.manager'
             - '@logger'
         public: false
+
+    paloma_client.encoder.accepting:
+        class: Paloma\ClientBundle\Security\AcceptingPasswordEncoder
+        public: false
