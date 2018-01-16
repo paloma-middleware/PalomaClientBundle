@@ -59,29 +59,17 @@ class ClientFactory
      */
     public function getDefaultClient()
     {
-        // We want to have the sanity check in order to find implementation errors
-        // early. However, it is common practice to use a PalomaClient within
-        // Twig extensions. In PROD mode Twig does some cache warmup which results
-        // in Twig extensions being instantiated. If such extensions depend on
-        // the Paloma default client then the method here will be called before
-        // the factory was initialized.
-        // In order to keep the sanity check and still allow the default Paloma
-        // client being used in Twig extensions we perform a check here whether
-        // we are currently in the Symfony cache warmup phase and if so we return
-        // a bogus PalomaClient to not break the cache warmup code.
+        // There are certain situations in which an even correctly implemented
+        // user of the ClientBundle would run into the situation that a default
+        // Paloma client is requested without the factory being intitalized
+        // properly. This mostly happens due to container wiring during cache
+        // warmup or within Twig extensions.
+        // Ideally we would throw an exception here but this would make the life
+        // of the bundle user much more inconvenient, instead we ensure that any
+        // call to Paloma will fail for sure.
         if ($this->defaultChannel === null || $this->defaultLocale === null) {
-            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            foreach ($bt as $frame) {
-                if (isset($frame['class']) && is_a($frame['class'],
-                        'Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface', true)) {
-                    return $this->getOrCreateClient('symfony_cache_warmup_fake_channel',
-                        'symfony_cache_warmup_fake_locale');
-                }
-            }
-
-            throw new \LogicException('Attempt to get the default Paloma client without prior ' .
-                'defining what the default channel and locale is. Forget to call ' .
-                'ClientFactory::setDefaultChannel() or ClientFactory::setDefaultLocale()?');
+            return $this->getOrCreateClient('uninitialized_paloma_client_channel',
+                'uninitialized_paloma_client_locale');
         }
 
         return $this->getOrCreateClient($this->defaultChannel, $this->defaultLocale);

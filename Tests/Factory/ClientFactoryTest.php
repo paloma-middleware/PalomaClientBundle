@@ -66,12 +66,12 @@ class ClientFactoryTest extends TestCase
         $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
     }
 
-    public function testGetDefaultFail()
+    public function testGetDefaultUninitialized()
     {
         $container = $this->getContainer('config.yml');
 
-        $this->expectException(\LogicException::class);
-        $container->get('paloma_client.default_client');
+        $client = $container->get('paloma_client.default_client');
+        $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
     }
 
 }
