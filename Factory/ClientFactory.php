@@ -38,11 +38,14 @@ class ClientFactory
     private $clientCache = [];
     /** @var string */
     private $palomaTraceId = null;
+    /** @var bool */
+    private $debug;
 
     public function __construct($baseUrl, $apiKey, SessionInterface $session = null,
         LoggerInterface $shopClientLogger = null, $successLogFormat = null,
         $errorLogFormat = null, PalomaProfiler $palomaProfile = null,
-        CacheItemPoolInterface $shopClientCache = null)
+        CacheItemPoolInterface $shopClientCache = null,
+        $debug = false)
     {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
@@ -52,6 +55,7 @@ class ClientFactory
         $this->errorLogFormat = $errorLogFormat;
         $this->palomaProfiler = $palomaProfile;
         $this->shopClientCache = $shopClientCache;
+        $this->debug = $debug;
     }
 
     /**
@@ -105,7 +109,7 @@ class ClientFactory
             'logger' => $this->shopClientLogger,
             'log_format_success' => $this->successLogFormat,
             'log_format_failure' => $this->errorLogFormat,
-            'profiler' => $this->palomaProfiler,
+            'profiler' => $this->debug ? $this->palomaProfiler : null,
             'cache' => $this->shopClientCache,
             'trace_id' => $this->palomaTraceId,
         ]);
