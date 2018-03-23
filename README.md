@@ -18,6 +18,16 @@ To get the default Paloma client (read below what that means):
 $client = $container->get('paloma_client.default_client');
 ```
 
+Instead of requesting the default client "at runtime" over the 
+`$cotainer->get()` method you can also make use of Symfony's auto wiring feature
+by using the `DefaultPalomaClient` class:
+
+```php
+public function mySymfonyAction(DefaultPalomaClient $paloma) {
+  $categories = $paloma->catalog()->categories();
+}
+```
+
 To get the client factory in order to get other clients than the default one:
 
 ```php
