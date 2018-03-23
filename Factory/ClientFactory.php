@@ -63,17 +63,10 @@ class ClientFactory
      */
     public function getDefaultClient()
     {
-        // There are certain situations in which an even correctly implemented
-        // user of the ClientBundle would run into the situation that a default
-        // Paloma client is requested without the factory being intitalized
-        // properly. This mostly happens due to container wiring during cache
-        // warmup or within Twig extensions.
-        // Ideally we would throw an exception here but this would make the life
-        // of the bundle user much more inconvenient, instead we ensure that any
-        // call to Paloma will fail for sure.
         if ($this->defaultChannel === null || $this->defaultLocale === null) {
-            return $this->getOrCreateClient('uninitialized_paloma_client_channel',
-                'uninitialized_paloma_client_locale');
+            throw new \LogicException('Attempt to get the default Paloma client without prior ' .
+                'defining what the default channel and locale is. Forget to call ' .
+                'ClientFactory::setDefaultChannel() or ClientFactory::setDefaultLocale()?');
         }
 
         return $this->getOrCreateClient($this->defaultChannel, $this->defaultLocale);

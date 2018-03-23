@@ -6,7 +6,7 @@ namespace Paloma\ClientBundle\Tests\Factory;
 
 use Cache\Adapter\Void\VoidCachePool;
 use Paloma\ClientBundle\Factory\ClientFactory;
-use Paloma\Shop\Paloma;
+use Paloma\Shop\PalomaClientInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -61,17 +61,45 @@ class ClientFactoryTest extends TestCase
         $client = $factory->getDefaultClient();
         $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
 
-        /** @var Paloma $client */
+        /** @var PalomaClientInterface $client */
         $client = $container->get('paloma_client.default_client');
-        $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
+        $this->assertInstanceOf('Paloma\ClientBundle\Factory\DefaultPalomaClient', $client);
+
+        $this->assertInstanceOf('Paloma\Shop\Catalog\CatalogClientInterface', $client->catalog());
     }
 
-    public function testGetDefaultUninitialized()
+    public function testGetDefaultClientUninitialized1()
     {
         $container = $this->getContainer('config.yml');
 
+        // Test that a default client can be created even if the ClientFactory
+        // is not initialized.
         $client = $container->get('paloma_client.default_client');
-        $this->assertInstanceOf('Paloma\Shop\PalomaClient', $client);
+        $this->assertInstanceOf('Paloma\ClientBundle\Factory\DefaultPalomaClient', $client);
+    }
+
+    public function testGetDefaultClientUninitialized2()
+    {
+        $container = $this->getContainer('config.yml');
+
+        // Test that we get an error when we try to get a the default
+        // PalomaClient directly from the factory when it is not initialized.
+        $this->expectException(\LogicException::class);
+        $factory = $container->get('paloma_client.client_factory');
+        $factory->getDefaultClient();
+    }
+
+    public function testGetDefaultClientUninitialized3()
+    {
+        $container = $this->getContainer('config.yml');
+
+        // Test that a default client can be created even if the ClientFactory
+        // is not initialized. However, accessing any properties on the default
+        // client has to result in an exception.
+        $client = $container->get('paloma_client.default_client');
+        $this->assertInstanceOf('Paloma\ClientBundle\Factory\DefaultPalomaClient', $client);
+        $this->expectException(\LogicException::class);
+        $client->catalog();
     }
 
 }

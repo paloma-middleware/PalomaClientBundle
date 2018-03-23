@@ -40,11 +40,12 @@ services:
         public: true
 
     paloma_client.default_client:
-        class: Paloma\Shop\PalomaClient
+        class: Paloma\ClientBundle\Factory\DefaultPalomaClient
+        arguments:
+            - '@paloma_client.client_factory'
         public: true
-        factory: 'paloma_client.client_factory:getDefaultClient'
 
-    Paloma\Shop\PalomaClient:
+    Paloma\ClientBundle\Factory\DefaultPalomaClient:
         alias: paloma_client.default_client
         public: true
 

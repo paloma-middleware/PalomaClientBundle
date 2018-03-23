@@ -7,7 +7,7 @@ namespace Paloma\ClientBundle\Security;
 use GuzzleHttp\Exception\BadResponseException;
 use Paloma\ClientBundle\Model\Customer;
 use Paloma\ClientBundle\Model\User;
-use Paloma\Shop\PalomaClient;
+use Paloma\Shop\PalomaClientInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -17,12 +17,12 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 class PalomaUserAuthProvider implements AuthenticationProviderInterface
 {
 
-    /** @var  PalomaClient */
+    /** @var  PalomaClientInterface */
     private $palomaClient;
     /** @var  LoggerInterface */
     private $logger;
 
-    public function __construct(PalomaClient $palomaClient, LoggerInterface $logger)
+    public function __construct(PalomaClientInterface $palomaClient, LoggerInterface $logger)
     {
         $this->palomaClient = $palomaClient;
         $this->logger = $logger;
