@@ -33,6 +33,7 @@ services:
             - 'error_log_format injected'
             - '@paloma_client.paloma_profiler'
             - 'cache_provider injected'
+            - 'cache_default_ttl injected'
             - '%kernel.debug%'
 
     Paloma\ClientBundle\Factory\ClientFactory:

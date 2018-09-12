@@ -31,6 +31,7 @@ class PalomaClientExtension extends Extension
         $def->replaceArgument(4, $config['log_format_success']);
         $def->replaceArgument(5, $config['log_format_failure']);
         $def->replaceArgument(7, $config['cache_provider']);
+        $def->replaceArgument(8, $config['cache_default_ttl']);
 
         $def = $container->getDefinition('paloma_client.paloma_user_auth_listener');
         $def->replaceArgument(0, $config['security']['username_parameter']);

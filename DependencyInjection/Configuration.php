@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('log_format_success')->defaultNull()->end()
                 ->scalarNode('log_format_failure')->defaultNull()->end()
                 ->scalarNode('cache_provider')->defaultNull()->end()
+                ->scalarNode('cache_default_ttl')->defaultNull()->end()
                 ->arrayNode('security')
                     ->addDefaultsIfNotSet()
                     ->children()

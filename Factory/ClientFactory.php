@@ -28,6 +28,8 @@ class ClientFactory
     private $errorLogFormat;
     /** @var  CacheItemPoolInterface */
     private $shopClientCache;
+    /** @var int */
+    private $shopClientCacheDefaultTtl = null;
     /** @var  PalomaProfiler */
     private $palomaProfiler;
     /** @var  string */
@@ -45,7 +47,7 @@ class ClientFactory
         LoggerInterface $shopClientLogger = null, $successLogFormat = null,
         $errorLogFormat = null, PalomaProfiler $palomaProfile = null,
         CacheItemPoolInterface $shopClientCache = null,
-        $debug = false)
+        $shopClientCacheDefaultTtl = null, $debug = false)
     {
         $this->baseUrl = $baseUrl;
         $this->apiKey = $apiKey;
@@ -55,6 +57,7 @@ class ClientFactory
         $this->errorLogFormat = $errorLogFormat;
         $this->palomaProfiler = $palomaProfile;
         $this->shopClientCache = $shopClientCache;
+        $this->shopClientCacheDefaultTtl = $shopClientCacheDefaultTtl;
         $this->debug = $debug;
     }
 
@@ -104,6 +107,7 @@ class ClientFactory
             'log_format_failure' => $this->errorLogFormat,
             'profiler' => $this->debug ? $this->palomaProfiler : null,
             'cache' => $this->shopClientCache,
+            'default_cache_ttl' => $this->shopClientCacheDefaultTtl,
             'trace_id' => $this->palomaTraceId,
         ]);
         return $this->clientCache[$key];
