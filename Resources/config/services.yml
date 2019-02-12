@@ -3,7 +3,7 @@ services:
     paloma_client.twig_profiler_extension:
         class: Paloma\ClientBundle\Twig\ProfilerExtension
         arguments:
-            - '@Twig.loader'
+            - '@twig.loader'
             - '%kernel.root_dir%'
         public: false
         tags:
