@@ -9,7 +9,7 @@
     "php": ">=5.5",
     "paloma/shop-client": "^2.6",
     "symfony/monolog-bundle": ">=3.0.2",
-    "symfony/symfony": ">=2.8,<4.0"
+    "symfony/framework-bundle": ">=2.8,<5.0"
   },
   "require-dev": {
     "cache/adapter-bundle": ">=1.0",

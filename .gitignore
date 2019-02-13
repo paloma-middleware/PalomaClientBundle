@@ -11,3 +11,7 @@
 # Symfony
 /Tests/app/cache
 /Tests/app/logs
+/var
+
+# PHPUnit
+/.phpunit.result.cache
