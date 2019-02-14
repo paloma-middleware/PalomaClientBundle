@@ -7,7 +7,7 @@ namespace Paloma\ClientBundle\Security;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 
 class PalomaUserSecurityFactory implements SecurityFactoryInterface
 {
@@ -16,11 +16,11 @@ class PalomaUserSecurityFactory implements SecurityFactoryInterface
     {
         $providerId = 'paloma_client.paloma_user_auth_provider' . $id;
         $container->setDefinition($providerId,
-            new DefinitionDecorator('paloma_client.paloma_user_auth_provider'));
+            new ChildDefinition('paloma_client.paloma_user_auth_provider'));
 
         $listenerId = 'paloma_client.paloma_user_auth_listener' . $id;
         $container->setDefinition($listenerId,
-            new DefinitionDecorator('paloma_client.paloma_user_auth_listener'));
+            new ChildDefinition('paloma_client.paloma_user_auth_listener'));
 
         return [$providerId, $listenerId, $defaultEntryPoint];
     }
