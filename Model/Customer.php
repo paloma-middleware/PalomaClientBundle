@@ -21,6 +21,8 @@ class Customer
     private $lastName;
     /** @var  string */
     private $gender;
+    /** @var string */
+    private $company;
 
     /**
      * @return string
@@ -148,4 +150,21 @@ class Customer
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getCompany()
+    {
+        return $this->company;
+    }
+
+    /**
+     * @param string $company
+     * @return Customer
+     */
+    public function setCompany(string $company)
+    {
+        $this->company = $company;
+        return $this;
+    }
 }

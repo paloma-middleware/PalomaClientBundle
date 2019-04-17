@@ -71,6 +71,8 @@ class PalomaUserAuthProvider implements AuthenticationProviderInterface
             $response['customer']['lastName'] : null);
         $customer->setGender(isset($response['customer']['gender']) ?
             $response['customer']['gender'] : null);
+        $customer->setCompany(isset($response['customer']['company']) ?
+            $response['customer']['company'] : null);
 
         $user = new User();
         $user->setUsername($response['user']['username']);
